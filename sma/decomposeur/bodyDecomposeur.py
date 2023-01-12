@@ -12,8 +12,9 @@ class BodyD(Body):
     def __init__(self):
         Body.__init__(self)
         self.color = (0,0,255)
-        self.sizeBody = 10
-        self.esperanceVie = 200
-        self.seuilFatigue = 50
-        self.seuilFaim = 40
-        self.seuilReproduction = 180
+        self.sizeBody = 8
+        self.esperanceVie = 800
+        self.seuilFatigue = 400
+        self.seuilFaim = 400
+        self.seuilReproduction = 100
+        self.seuilRepos = 200

@@ -25,11 +25,13 @@ class Body:
         self.dateNaissance = datetime.datetime.now()
         self.esperanceVie = 0
         self.sizeBody = 0
+        self.seuilRepos = 0
 
         self.timerVie = 0
         self.timerFatigue = 0
         self.timerFaim = 0
         self.timerReproduction = 0
+        self.timerDormir = 0
         self.estMort = False
         self.dort = False
         self.reproduction = False
@@ -64,24 +66,34 @@ class Body:
                 self.acceleration = Vector2(0, 0)
                 self.edge()
 
-    def update(self):
-        self.timerVie += 1
-        self.timerFatigue += 1
-        self.timerFaim += 1
-        self.timerReproduction += 1
+        if self.dort:
+            self.timerDormir += 1
+            if self.timerDormir >= self.seuilRepos:
+                self.timerFatigue = 0
+                self.dort = False
+                self.timerDormir = 0
 
-        #gestion esperance vie
-        if self.timerVie >= self.esperanceVie:
-            self.estMort = True
-        #gestion fatigue
-        if self.timerFatigue >= self.seuilFatigue:
-            self.dort = True
-        #gestion faim
-        if self.timerFaim >= self.seuilFaim:
-            self.estMort = True
-        #gestion reproduction
-        if self.timerReproduction >= self.seuilReproduction:
-            self.reproduction = True
+
+    def update(self):
+        if not self.estMort:
+            self.timerVie += 1
+            self.timerFatigue += 1
+            self.timerFaim += 1
+            self.timerReproduction += 1
+
+            #gestion esperance vie
+            if self.timerVie >= self.esperanceVie:
+                self.estMort = True
+            #gestion fatigue
+            if self.timerFatigue >= self.seuilFatigue/2:
+                self.dort = True
+            #gestion faim
+            if self.timerFaim >= self.seuilFaim:
+                self.estMort = True
+            #gestion reproduction
+            if self.timerReproduction >= self.seuilReproduction:
+                self.reproduction = True
+
 
 
 

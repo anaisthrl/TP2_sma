@@ -11,10 +11,11 @@ class BodyH(Body):
 
     def __init__(self):
         Body.__init__(self)
-        self.color = (187,15,199)
-        self.sizeBody = 10
+        self.color = (255,255,0)
+        self.sizeBody = 15
         self.esperanceVie = 400
         self.seuilFatigue = 200
-        self.seuilFaim = 25
-        self.seuilReproduction = 100
+        self.seuilFaim = 250
+        self.seuilReproduction = 80
+        self.seuilRepos = 100
 

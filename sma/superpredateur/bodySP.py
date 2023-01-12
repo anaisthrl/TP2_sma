@@ -14,6 +14,7 @@ class BodySP(Body):
         self.color = (255, 0, 0)
         self.sizeBody = 30
         self.esperanceVie = 500
-        self.seuilFatigue = 100
-        self.seuilFaim = 50
-        self.seuilReproduction = 200
+        self.seuilFatigue = 200
+        self.seuilFaim = 250
+        self.seuilReproduction = 90
+        self.seuilRepos = 50

@@ -4,7 +4,6 @@ from pygame import Vector2
 
 from sma.agent import Agent
 from sma.carnivores.carnivore import Carnivore
-from sma.decomposeur.decomposeur import Decomposeur
 from sma.herbivores.herbivore import Herbivore
 
 
@@ -12,7 +11,6 @@ class Superpredateur (Agent):
 
     def __init__(self, body):
         Agent.__init__(self,body)
-        self.mangeur = True
 
     def update(self):
         target, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
@@ -39,9 +37,7 @@ class Superpredateur (Agent):
                 self.body.acceleration = force
                 if self.body.position.distance_to(cible.position) <= self.body.sizeBody+p.sizeBody:
                     cible.estMort = True
-
-
-
+                    self.body.timerFaim = 0
 
         self.body.update()
 

@@ -9,3 +9,9 @@ class Fustrum :
             if obj.position.distance_to(self.parent.position) < self.rayon:
                 return True
         return False
+
+    def insideVege(self, obj):
+        if hasattr(obj, "posXY"):
+            if obj.posXY.distance_to(self.parent.position) < self.rayon:
+                return True
+        return False

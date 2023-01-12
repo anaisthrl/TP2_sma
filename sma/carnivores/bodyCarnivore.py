@@ -11,11 +11,12 @@ class BodyC(Body):
 
     def __init__(self):
         Body.__init__(self)
-        self.color = (255,0,255)
+        self.color = (255,100,0)
         self.sizeBody = 20
         self.esperanceVie = 350
-        self.seuilFatigue = 100
-        self.seuilFaim = 100
-        self.seuilReproduction = 200
+        self.seuilFatigue = 200
+        self.seuilFaim = 250
+        self.seuilReproduction = 150
+        self.seuilRepos = 50
 
 

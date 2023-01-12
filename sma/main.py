@@ -48,6 +48,22 @@ def computePerception(a):
             if a.body.fustrum.inside(b.body):
                 a.body.fustrum.perceptionList.append(b.body)
 
+    if isinstance(a, Herbivore):
+        for b in core.memory('vegetaux'):
+            if a.body.fustrum.insideVege(b):
+                a.body.fustrum.perceptionList.append(b)
+
+    if isinstance(a, Decomposeur):
+        for b in core.memory('carnivore'):
+            if a.body.fustrum.insideVege(b.body) and b.body.estMort:
+                a.body.fustrum.perceptionList.append(b)
+        for b in core.memory('herbivore'):
+            if a.body.fustrum.insideVege(b.body) and b.body.estMort:
+                a.body.fustrum.perceptionList.append(b)
+        for b in core.memory('SP'):
+            if a.body.fustrum.insideVege(b.body) and b.body.estMort:
+                a.body.fustrum.perceptionList.append(b)
+
 
 def computeDecision(a):
     a.update()
