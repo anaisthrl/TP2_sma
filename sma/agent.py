@@ -9,6 +9,7 @@ class Agent:
         self.body = body
         self.uuid = random.randint(100000, 999999999)
 
+
     def update(self):
         target, neighborhood = self.filter(self.body.fustrum.perceptionList)
         acceleration = Vector2()
@@ -17,19 +18,20 @@ class Agent:
             rep = rep + self.body.position - n.position
         att = Vector2()
         if target is not None:
-            att = target.body.position - self.body.position
+           att = target.body.position - self.body.position
         acceleration = att+rep
-        self.body.acceleration = acceleration
+        self.body.acceleration = Vector2(0,0)
 
     def filter(self, perceptionList):
         target = None
         neighborhood = []
         for p in perceptionList:
-            if isinstance(p, "Target"):
+            if isinstance(p, Agent):
                 target = p
             else:
                 neighborhood.append(p)
         return target, neighborhood
 
     def show(self):
-        pass
+        self.body.show()
+

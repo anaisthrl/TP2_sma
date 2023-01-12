@@ -1,6 +1,8 @@
 import core
 from agent import Agent
 from body import Body
+from sma.superpredateur.bodySP import BodySP
+from sma.superpredateur.superpredateur import Superpredateur
 
 
 def setup():
@@ -8,11 +10,10 @@ def setup():
     core.fps = 30
     core.WINDOW_SIZE = [800, 600]
 
-    core.memory("agents", [])
-    core.memory("item", [])
+    core.memory('SP', []) #superpredateur
 
-    for i in range(0, 30):
-        core.memory('agents').append(Agent(Body()))
+    for i in range(0, 3):
+        core.memory('SP').append(Superpredateur(BodySP()))
 
     print("Setup END-----------")
 
@@ -33,19 +34,16 @@ def run():
     core.cleanScreen()
 
     # Display
-    for agent in core.memory("agents"):
+    for agent in core.memory("SP"):
         agent.show()
 
-    for item in core.memory("item"):
-        item.show()
-
-    for agent in core.memory("agents"):
+    for agent in core.memory("SP"):
         computePerception(agent)
 
-    for agent in core.memory("agents"):
+    for agent in core.memory("SP"):
         computeDecision(agent)
 
-    for agent in core.memory("agents"):
+    for agent in core.memory("SP"):
         applyDecision(agent)
 
 
