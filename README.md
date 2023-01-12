@@ -5,8 +5,18 @@ Rendu TP noté Anaïs THORAL
 POLYTECH LYON
 
 Code couleur:
+
+
 orange : prédateurs
+
+
 bleu : décomposeurs
+
+
 jaune : herbivore
+
+
 rouge: superprédateur
+
+
 vert: végétaux
