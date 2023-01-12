@@ -33,6 +33,7 @@ class Herbivore (Agent):
                 self.body.acceleration = force
                 if self.body.position.distance_to(cible.posXY) <= self.body.sizeBody+p.size:
                     p.color = (150, 150, 150)
+                    self.body.timerFaim = 0
 
         self.body.update()
 

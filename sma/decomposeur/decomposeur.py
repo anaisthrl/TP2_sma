@@ -36,6 +36,7 @@ class Decomposeur (Agent):
                 self.body.acceleration = force
                 if self.body.position.distance_to(cible.position) <= self.body.sizeBody+p.sizeBody:
                     cible.estMort = True
+                    self.body.timerFaim = 0
 
 
         self.body.update()

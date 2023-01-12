@@ -64,6 +64,11 @@ def computePerception(a):
             if a.body.fustrum.insideVege(b.body) and b.body.estMort:
                 a.body.fustrum.perceptionList.append(b)
 
+    if isinstance(a, Carnivore):
+        for b in core.memory('herbivore'):
+            if a.body.fustrum.inside(b.body):
+                a.body.fustrum.perceptionList.append(b.body)
+
 
 def computeDecision(a):
     a.update()
