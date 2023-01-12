@@ -13,7 +13,7 @@ class BodySP(Body):
         Body.__init__(self)
         self.color = (255, 0, 0)
         self.sizeBody = 30
-        self.esperanceVie = 100
-        self.seuilFatigue = 50
-        self.seuilFaim = 30
-        self.seuilReproduction = 20
+        self.esperanceVie = 500
+        self.seuilFatigue = 100
+        self.seuilFaim = 50
+        self.seuilReproduction = 200

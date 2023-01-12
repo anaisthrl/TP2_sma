@@ -13,9 +13,9 @@ class BodyC(Body):
         Body.__init__(self)
         self.color = (255,0,255)
         self.sizeBody = 20
-        self.esperanceVie = 80
-        self.seuilFatigue = 40
-        self.seuilFaim = 15
-        self.seuilReproduction = 30
+        self.esperanceVie = 350
+        self.seuilFatigue = 100
+        self.seuilFaim = 100
+        self.seuilReproduction = 200
 
 

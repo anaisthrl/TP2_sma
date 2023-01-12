@@ -13,7 +13,7 @@ class BodyD(Body):
         Body.__init__(self)
         self.color = (0,0,255)
         self.sizeBody = 10
-        self.esperanceVie = 150
+        self.esperanceVie = 200
         self.seuilFatigue = 50
         self.seuilFaim = 40
-        self.seuilReproduction = 20
+        self.seuilReproduction = 180

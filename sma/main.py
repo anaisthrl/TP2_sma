@@ -9,6 +9,8 @@ from sma.herbivores.bodyHerbivore import BodyH
 from sma.herbivores.herbivore import Herbivore
 from sma.superpredateur.bodySP import BodySP
 from sma.superpredateur.superpredateur import Superpredateur
+from sma.vegetaux import Vegetaux
+
 
 def setup():
     print("Setup START---------")
@@ -19,24 +21,32 @@ def setup():
     core.memory('herbivore', [])  # herbivore
     core.memory('decomposeur', [])  # decomposeur
     core.memory('carnivore', [])  # carnivore
+    core.memory('vegetaux', [])  # vegetaux
 
     for i in range(0, 1):
         core.memory('SP').append(Superpredateur(BodySP()))
 
-    for i in range(0,10):
+    for i in range(0,5):
         core.memory('herbivore').append(Herbivore(BodyH()))
 
-    for i in range(0,20):
+    for i in range(0,10):
         core.memory('decomposeur').append(Decomposeur(BodyD()))
 
-    for i in range(0,10):
+    for i in range(0,3):
         core.memory('carnivore').append(Carnivore(BodyC()))
+
+    for i in range(0, 20):
+        core.memory('vegetaux').append(Vegetaux())
 
     print("Setup END-----------")
 
 
 def computePerception(a):
-    pass
+    a.body.fustrum.perceptionList = []
+    if isinstance(a, Superpredateur):
+        for b in core.memory('carnivore'):
+            if a.body.fustrum.inside(b.body):
+                a.body.fustrum.perceptionList.append(b.body)
 
 
 def computeDecision(a):
@@ -119,6 +129,9 @@ def run():
     for agent in core.memory("carnivore"):
         applyDecision(agent)
 
+    #display vegetaux
+    for item in core.memory("vegetaux"):
+        item.show()
 
 
 core.main(setup, run)
