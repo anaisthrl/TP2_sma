@@ -14,5 +14,6 @@ class BodyC(Body):
         self.color = (255,0,255)
         self.sizeBody = 20
         self.esperanceVie = 80
+        self.seuilFatigue = 40
 
 

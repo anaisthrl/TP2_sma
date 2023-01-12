@@ -14,4 +14,5 @@ class BodyH(Body):
         self.color = (0,255,0)
         self.sizeBody = 10
         self.esperanceVie = 50
+        self.seuilFatigue = 30
 

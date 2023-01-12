@@ -14,3 +14,4 @@ class BodyD(Body):
         self.color = (0,0,255)
         self.sizeBody = 10
         self.esperanceVie = 150
+        self.seuilFatigue = 50

@@ -27,7 +27,9 @@ class Body:
         self.sizeBody = 0
 
         self.timerVie = 0
+        self.timerFatigue = 0
         self.estMort = False
+        self.dort = False
         self.color = (0,0,0)
 
     def edge(self):
@@ -45,23 +47,33 @@ class Body:
             self.acceleration *= -1
 
     def move(self):
-        if not self.estMort:
-            if self.acceleration.length() > self.maxAcc:
-                self.acceleration.scale_to_length(self.maxAcc)
+        if not self.dort:
+            if not self.estMort : #quand l'agent dort il arrête de bouger
+                if self.acceleration.length() > self.maxAcc:
+                    self.acceleration.scale_to_length(self.maxAcc)
 
-            self.velocity += self.acceleration
-            if self.velocity.length() > self.maxSpeed:
-                self.velocity.scale_to_length(self.maxSpeed)
+                self.velocity += self.acceleration
+                if self.velocity.length() > self.maxSpeed:
+                    self.velocity.scale_to_length(self.maxSpeed)
 
-            self.position += self.velocity
-            self.acceleration = Vector2(0, 0)
-            self.edge()
+                self.position += self.velocity
+                self.acceleration = Vector2(0, 0)
+                self.edge()
 
     def update(self):
         self.timerVie += 1
+        self.timerFatigue += 1
+        print(self.timerFatigue)
+        print(self.seuilFatigue)
+        #gestion esperance vie
         if self.timerVie >= self.esperanceVie:
             self.estMort = True
             self.color = (150,150,150)
+        #gestion fatigue
+        if self.timerFatigue >= self.seuilFatigue:
+            self.dort = True
+
+
 
     def show(self):
         core.Draw.circle(self.color, self.position, self.sizeBody)
