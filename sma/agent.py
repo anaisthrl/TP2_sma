@@ -11,7 +11,7 @@ class Agent:
 
 
     def update(self):
-        target, neighborhood = self.filter(self.body.fustrum.perceptionList)
+        target, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
         acceleration = Vector2()
         rep = Vector2()
         for n in neighborhood:
@@ -24,7 +24,7 @@ class Agent:
 
         self.body.update()
 
-    def filter(self, perceptionList):
+    def filtrePerception(self, perceptionList):
         target = None
         neighborhood = []
         for p in perceptionList:
