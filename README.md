@@ -1,6 +1,6 @@
 # TP2_sma
  
-ATTENTION: je me suis arrêtée à la question 6: le superprédateur peut manger les prédateurs
+ATTENTION: je me suis arrêtée à la question 6: les prédateurs peuvent manger (sauf herbivores et decomposeur)
 
 
 Rendu TP noté Anaïs THORAL 
