@@ -28,9 +28,11 @@ class Body:
 
         self.timerVie = 0
         self.timerFatigue = 0
+        self.timerFaim = 0
         self.estMort = False
         self.dort = False
         self.color = (0,0,0)
+
 
     def edge(self):
         if self.position.x <= self.sizeBody:
@@ -63,17 +65,21 @@ class Body:
     def update(self):
         self.timerVie += 1
         self.timerFatigue += 1
-        print(self.timerFatigue)
-        print(self.seuilFatigue)
+        self.timerFaim += 1
+
         #gestion esperance vie
         if self.timerVie >= self.esperanceVie:
             self.estMort = True
-            self.color = (150,150,150)
         #gestion fatigue
         if self.timerFatigue >= self.seuilFatigue:
             self.dort = True
+        #gestion faim
+        if self.timerFaim >= self.seuilFaim:
+            self.estMort = True
 
 
 
     def show(self):
+        if self.estMort:
+            self.color = (150, 150, 150)
         core.Draw.circle(self.color, self.position, self.sizeBody)

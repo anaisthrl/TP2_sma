@@ -15,3 +15,4 @@ class BodyD(Body):
         self.sizeBody = 10
         self.esperanceVie = 150
         self.seuilFatigue = 50
+        self.seuilFaim = 40

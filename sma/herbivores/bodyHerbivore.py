@@ -15,4 +15,5 @@ class BodyH(Body):
         self.sizeBody = 10
         self.esperanceVie = 50
         self.seuilFatigue = 30
+        self.seuilFaim = 25
 
