@@ -22,6 +22,8 @@ class Agent:
         acceleration = att+rep
         self.body.acceleration = Vector2(0,0)
 
+        self.body.update()
+
     def filter(self, perceptionList):
         target = None
         neighborhood = []

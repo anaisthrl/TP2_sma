@@ -1,3 +1,4 @@
+import datetime
 import random
 
 from pygame.math import Vector2
@@ -18,7 +19,16 @@ class Body:
         self.acceleration = Vector2(random.uniform(-3, 3), random.uniform(-3, 3))  # pour mouvement aléatoire
         self.maxAcc = 3
         self.maxSpeed = 3
-        self.sizeBody = 10
+        self.seuilFaim = 0
+        self.seuilFatigue = 0
+        self.seuilReproduction = 0
+        self.dateNaissance = datetime.datetime.now()
+        self.esperanceVie = 0
+        self.sizeBody = 0
+
+        self.timerVie = 0
+        self.estMort = False
+        self.color = (0,0,0)
 
     def edge(self):
         if self.position.x <= self.sizeBody:
@@ -35,13 +45,23 @@ class Body:
             self.acceleration *= -1
 
     def move(self):
-        if self.acceleration.length() > self.maxAcc:
-            self.acceleration.scale_to_length(self.maxAcc)
+        if not self.estMort:
+            if self.acceleration.length() > self.maxAcc:
+                self.acceleration.scale_to_length(self.maxAcc)
 
-        self.velocity += self.acceleration
-        if self.velocity.length() > self.maxSpeed:
-            self.velocity.scale_to_length(self.maxSpeed)
+            self.velocity += self.acceleration
+            if self.velocity.length() > self.maxSpeed:
+                self.velocity.scale_to_length(self.maxSpeed)
 
-        self.position += self.velocity
-        self.acceleration = Vector2(0, 0)
-        self.edge()
+            self.position += self.velocity
+            self.acceleration = Vector2(0, 0)
+            self.edge()
+
+    def update(self):
+        self.timerVie += 1
+        if self.timerVie >= self.esperanceVie:
+            self.estMort = True
+            self.color = (150,150,150)
+
+    def show(self):
+        core.Draw.circle(self.color, self.position, self.sizeBody)

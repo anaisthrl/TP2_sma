@@ -11,9 +11,6 @@ class BodyD(Body):
 
     def __init__(self):
         Body.__init__(self)
-        self.color = (0,0,0)
+        self.color = (0,0,255)
         self.sizeBody = 10
-
-    def show(self):
-        self.color = (0, 0, 255)
-        core.Draw.circle(self.color, self.position, self.sizeBody)
+        self.esperanceVie = 150
