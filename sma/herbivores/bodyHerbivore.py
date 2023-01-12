@@ -16,4 +16,5 @@ class BodyH(Body):
         self.esperanceVie = 50
         self.seuilFatigue = 30
         self.seuilFaim = 25
+        self.seuilReproduction = 20
 

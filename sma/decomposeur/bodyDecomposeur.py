@@ -16,3 +16,4 @@ class BodyD(Body):
         self.esperanceVie = 150
         self.seuilFatigue = 50
         self.seuilFaim = 40
+        self.seuilReproduction = 20

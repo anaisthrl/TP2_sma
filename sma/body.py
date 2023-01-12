@@ -29,8 +29,10 @@ class Body:
         self.timerVie = 0
         self.timerFatigue = 0
         self.timerFaim = 0
+        self.timerReproduction = 0
         self.estMort = False
         self.dort = False
+        self.reproduction = False
         self.color = (0,0,0)
 
 
@@ -66,6 +68,7 @@ class Body:
         self.timerVie += 1
         self.timerFatigue += 1
         self.timerFaim += 1
+        self.timerReproduction += 1
 
         #gestion esperance vie
         if self.timerVie >= self.esperanceVie:
@@ -76,6 +79,9 @@ class Body:
         #gestion faim
         if self.timerFaim >= self.seuilFaim:
             self.estMort = True
+        #gestion reproduction
+        if self.timerReproduction >= self.seuilReproduction:
+            self.reproduction = True
 
 
 

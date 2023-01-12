@@ -24,6 +24,11 @@ def computePerception(a):
 
 def computeDecision(a):
     a.update()
+    #question 4 d
+    if a.body.reproduction:
+        core.memory('SP').append(Superpredateur(BodySP()))
+        a.body.reproduction = False
+        a.body.timerReproduction = 0
 
 
 def applyDecision(a):

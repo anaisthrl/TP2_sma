@@ -15,4 +15,5 @@ class BodySP(Body):
         self.sizeBody = 30
         self.esperanceVie = 100
         self.seuilFatigue = 50
-        self.seuilFaim = 10
+        self.seuilFaim = 30
+        self.seuilReproduction = 20
