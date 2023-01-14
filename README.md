@@ -38,3 +38,12 @@ Couvée du Hibou : 2 à 4 oeufs par an
 
 
 Espérance de vie : entre 5 et 20 ans 
+
+
+* Herbivores
+
+Vitesse de la souris: 6 km/h
+
+Reproduction souris : 10 portée / an de 5 à 10 souriceaux
+
+Espérance de vie : 2 ans
