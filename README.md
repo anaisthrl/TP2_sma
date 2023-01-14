@@ -26,4 +26,15 @@ vert: végétaux
 
 ------------------------------------------------RECHERCHES POUR ENVIRONNEMENTS COHERENT--------------------------------------------
 
-Vitesse Hibou : entre 10 et 20 miles de l'heure 
+1 an = 1110 frames (mon programme tourne à 30 frames/secondes)
+
+* Super prédateurs *
+
+
+Vitesse du Hibou : entre 10 et 20 miles de l'heure 
+
+
+Couvée du Hibou : 2 à 4 oeufs par an
+
+
+Espérance de vie : entre 5 et 20 ans 
