@@ -28,7 +28,7 @@ vert: végétaux
 
 1 an = 1110 frames (mon programme tourne à 30 frames/secondes)
 
-* Super prédateurs *
+* Super prédateurs 
 
 
 Vitesse du Hibou : entre 10 et 20 miles de l'heure 
