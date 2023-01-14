@@ -1,6 +1,6 @@
 # TP2_sma
  
------------------------------------------------------------------INFORMATIONS POUR LE RENDU------------------------------------------------------------------------
+------------------------------------------------INFORMATIONS POUR LE RENDU----------------------------------------------------------
 
 Rendu TP noté Anaïs THORAL 
 5A info apprentissage
@@ -24,6 +24,6 @@ rouge: superprédateur
 vert: végétaux
 
 
------------------------------------------------------------RECHERCHES POUR ENVIRONNEMENTS COHERENT----------------------------------------------------------------
+------------------------------------------------RECHERCHES POUR ENVIRONNEMENTS COHERENT--------------------------------------------
 
 Vitesse Hibou : entre 10 et 20 miles de l'heure 
