@@ -1,6 +1,6 @@
 # TP2_sma
  
-ATTENTION: je me suis arrêtée à la question 6: les prédateurs peuvent manger (sauf herbivores et decomposeur)
+ATTENTION: je me suis arrêtée à la question 6: les superprédateurs et les carnivores peuvent manger (sauf herbivores et decomposeur)
 
 
 Rendu TP noté Anaïs THORAL 
@@ -10,7 +10,7 @@ POLYTECH LYON
 Code couleur:
 
 
-orange : prédateurs
+orange : carnivores
 
 
 bleu : décomposeurs
