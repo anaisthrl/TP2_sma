@@ -1,7 +1,6 @@
 # TP2_sma
  
-ATTENTION: je me suis arrêtée à la question 6: les superprédateurs et les carnivores peuvent manger (sauf herbivores et decomposeur)
-
+-----------------------------------------------------------------INFORMATIONS POUR LE RENDU------------------------------------------------------------------------
 
 Rendu TP noté Anaïs THORAL 
 5A info apprentissage
@@ -23,3 +22,8 @@ rouge: superprédateur
 
 
 vert: végétaux
+
+
+-----------------------------------------------------------RECHERCHES POUR ENVIRONNEMENTS COHERENT----------------------------------------------------------------
+
+Vitesse Hibou : entre 10 et 20 miles de l'heure 
