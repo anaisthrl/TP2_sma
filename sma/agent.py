@@ -10,30 +10,30 @@ class Agent:
         self.uuid = random.randint(100000, 999999999)
 
 
-    def update(self):
-        target, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
-        acceleration = Vector2()
-        rep = Vector2()
-        for n in neighborhood:
-            rep = rep + self.body.position - n.position
-        att = Vector2()
-        if target is not None:
-           att = target.body.position - self.body.position
-        acceleration = att+rep
-        self.body.acceleration = Vector2(0,0)
-
-
-        self.body.update()
-
-    def filtrePerception(self, perceptionList):
-        target = None
-        neighborhood = []
-        for p in perceptionList:
-            if isinstance(p, Agent):
-                target = p
-            else:
-                neighborhood.append(p)
-        return target, neighborhood
+    # def update(self):
+    #     target, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
+    #     acceleration = Vector2()
+    #     rep = Vector2()
+    #     for n in neighborhood:
+    #         rep = rep + self.body.position - n.position
+    #     att = Vector2()
+    #     if target is not None:
+    #        att = target.body.position - self.body.position
+    #     acceleration = att+rep
+    #     self.body.acceleration = Vector2(0,0)
+    #
+    #
+    #     self.body.update()
+    #
+    # def filtrePerception(self, perceptionList):
+    #     target = None
+    #     neighborhood = []
+    #     for p in perceptionList:
+    #         if isinstance(p, Agent):
+    #             target = p
+    #         else:
+    #             neighborhood.append(p)
+    #     return target, neighborhood
 
     def show(self):
         self.body.show()

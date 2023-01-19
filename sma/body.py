@@ -9,23 +9,16 @@ from fustrum import Fustrum
 
 class Body:
     def __init__(self):
-        self.fustrum = Fustrum(100,self)
+        self.fustrum = Fustrum(250,self)
         self.position = Vector2(random.randint(0, core.WINDOW_SIZE[0] - 20),
                                 random.randint(0, core.WINDOW_SIZE[1] - 20))
 
         self.position = Vector2(random.randint(0, core.WINDOW_SIZE[0] - 20),
                                 random.randint(0, core.WINDOW_SIZE[1] - 20))
-        self.velocity = Vector2(random.uniform(-200, 200), random.uniform(-200, 200))  # pour mouvement aléatoire
         self.acceleration = Vector2(random.uniform(-3, 3), random.uniform(-3, 3))  # pour mouvement aléatoire
         self.maxAcc = 3
-        self.maxSpeed = 3
-        self.seuilFaim = 0
-        self.seuilFatigue = 0
-        self.seuilReproduction = 0
+        self.maxSpeed = 4
         self.dateNaissance = datetime.datetime.now()
-        self.esperanceVie = 0
-        self.sizeBody = 0
-        self.seuilRepos = 0
 
         self.timerVie = 0
         self.timerFatigue = 0
@@ -93,9 +86,6 @@ class Body:
             #gestion reproduction
             if self.timerReproduction >= self.seuilReproduction:
                 self.reproduction = True
-
-
-
 
     def show(self):
         if self.estMort:

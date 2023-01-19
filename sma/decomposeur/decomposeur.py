@@ -1,5 +1,6 @@
 from pygame import Vector2
 
+import core
 from sma.agent import Agent
 from sma.carnivores.carnivore import Carnivore
 from sma.herbivores.herbivore import Herbivore
@@ -36,6 +37,7 @@ class Decomposeur (Agent):
                 self.body.acceleration = force
                 if self.body.position.distance_to(cible.position) <= self.body.sizeBody+p.sizeBody:
                     cible.estMort = True
+                    cible.estMange = True
                     self.body.timerFaim = 0
 
 

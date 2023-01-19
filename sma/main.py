@@ -1,3 +1,5 @@
+from pygame import Vector2
+
 import core
 from agent import Agent
 from body import Body
@@ -17,76 +19,91 @@ def setup():
     core.fps = 30
     core.WINDOW_SIZE = [1000, 600]
 
-    core.memory('SP', []) #superpredateur
-    core.memory('herbivore', [])  # herbivore
-    core.memory('decomposeur', [])  # decomposeur
-    core.memory('carnivore', [])  # carnivore
-    core.memory('vegetaux', [])  # vegetaux
+    core.memory('agents', [])  # classe mere agent
+    core.memory('items', [])
 
     for i in range(0, 1):
-        core.memory('SP').append(Superpredateur(BodySP()))
+        core.memory('agents').append(Superpredateur(BodySP()))
 
-    for i in range(0,5):
-        core.memory('herbivore').append(Herbivore(BodyH()))
+    for i in range(0, 1):
+        core.memory('agents').append(Herbivore(BodyH()))
 
-    for i in range(0,10):
-        core.memory('decomposeur').append(Decomposeur(BodyD()))
+    for i in range(0, 1):
+        core.memory('agents').append(Decomposeur(BodyD()))
 
-    for i in range(0,3):
-        core.memory('carnivore').append(Carnivore(BodyC()))
+    for i in range(0, 1):
+        core.memory('agents').append(Carnivore(BodyC()))
 
-    for i in range(0, 20):
-        core.memory('vegetaux').append(Vegetaux())
+    for i in range(0, 15):
+        core.memory('items').append(Vegetaux())
 
     print("Setup END-----------")
 
 
 def computePerception(a):
     a.body.fustrum.perceptionList = []
-    if isinstance(a, Superpredateur):
-        for b in core.memory('carnivore'):
-            if a.body.fustrum.inside(b.body):
+    if isinstance(a, Superpredateur) and not a.body.estMort:
+        for b in core.memory('agents'):
+            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Superpredateur) and not isinstance(b,Herbivore) and not isinstance(b,Decomposeur):
                 a.body.fustrum.perceptionList.append(b.body)
 
-    if isinstance(a, Herbivore):
-        for b in core.memory('vegetaux'):
+    if isinstance(a, Carnivore) and not a.body.estMort:
+        for b in core.memory('agents'):
+            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Carnivore) and not isinstance(b,Superpredateur) and not isinstance(b,Decomposeur):
+                a.body.fustrum.perceptionList.append(b.body)
+
+    if isinstance(a, Herbivore) and not a.body.estMort:
+        for b in core.memory('items'):
             if a.body.fustrum.insideVege(b):
                 a.body.fustrum.perceptionList.append(b)
+                if b.estMange:
+                    core.memory('items').remove(b)
 
     if isinstance(a, Decomposeur):
-        for b in core.memory('carnivore'):
-            if a.body.fustrum.insideVege(b.body) and b.body.estMort:
-                a.body.fustrum.perceptionList.append(b)
-        for b in core.memory('herbivore'):
-            if a.body.fustrum.insideVege(b.body) and b.body.estMort:
-                a.body.fustrum.perceptionList.append(b)
-        for b in core.memory('SP'):
-            if a.body.fustrum.insideVege(b.body) and b.body.estMort:
-                a.body.fustrum.perceptionList.append(b)
-
-    if isinstance(a, Carnivore):
-        for b in core.memory('herbivore'):
-            if a.body.fustrum.inside(b.body):
+        for b in core.memory('agents'):
+            if a.body.fustrum.inside(b.body) and b.body.estMort and not isinstance(b,Decomposeur):
                 a.body.fustrum.perceptionList.append(b.body)
+                if b.body.estMange:
+                    core.memory('agents').remove(b)
 
 
 def computeDecision(a):
     a.update()
-    #question 4 d
+    #question 4: gestion de la mort des decomposeurs
+    if a.body.estMort and isinstance(a, Decomposeur):
+        newVege = Vegetaux()
+        newVege.posXY = a.body.position
+
+        core.memory('agents').remove(a)
+
+        core.memory('items').append(newVege)
+
+    # question 4 d: gestion de la reproduction
     if a.body.reproduction and isinstance(a, Superpredateur):
-        core.memory('SP').append(Superpredateur(BodySP()))
+        newBody = BodySP()
+        newBody.position = a.body.position + Vector2(50, 50)
+        core.memory('agents').append(Superpredateur(newBody))
         a.body.reproduction = False
         a.body.timerReproduction = 0
+
     if a.body.reproduction and isinstance(a, Carnivore):
-        core.memory('carnivore').append(Carnivore(BodyC()))
+        newBodyC = BodyC()
+        newBodyC.position = a.body.position + Vector2(50, 50)
+        core.memory('agents').append(Carnivore(newBodyC))
         a.body.reproduction = False
         a.body.timerReproduction = 0
+
     if a.body.reproduction and isinstance(a, Herbivore):
-        core.memory('herbivore').append(Herbivore(BodyH()))
+        newBodyH = BodyH()
+        newBodyH.position = a.body.position + Vector2(50, 50)
+        core.memory('agents').append(Herbivore(newBodyH))
         a.body.reproduction = False
         a.body.timerReproduction = 0
+
     if a.body.reproduction and isinstance(a, Decomposeur):
-        core.memory('decomposeur').append(Decomposeur(BodyD()))
+        newBodyD = BodyD()
+        newBodyD.position = a.body.position + Vector2(50, 50)
+        core.memory('agents').append(Decomposeur(newBodyD))
         a.body.reproduction = False
         a.body.timerReproduction = 0
 
@@ -99,59 +116,20 @@ def run():
     core.cleanScreen()
 
     # Display superpredateur
-    for agent in core.memory("SP"):
+    for agent in core.memory("agents"):
         agent.show()
 
-    for agent in core.memory("SP"):
+    for agent in core.memory("agents"):
         computePerception(agent)
 
-    for agent in core.memory("SP"):
+    for agent in core.memory("agents"):
         computeDecision(agent)
 
-    for agent in core.memory("SP"):
+    for agent in core.memory("agents"):
         applyDecision(agent)
 
-    # Display herbivores
-    for agent in core.memory("herbivore"):
-        agent.show()
-
-    for agent in core.memory("herbivore"):
-        computePerception(agent)
-
-    for agent in core.memory("herbivore"):
-         computeDecision(agent)
-
-    for agent in core.memory("herbivore"):
-        applyDecision(agent)
-
-    # Display decomposeur
-    for agent in core.memory("decomposeur"):
-        agent.show()
-
-    for agent in core.memory("decomposeur"):
-        computePerception(agent)
-
-    for agent in core.memory("decomposeur"):
-        computeDecision(agent)
-
-    for agent in core.memory("decomposeur"):
-        applyDecision(agent)
-
-    # Display carnivores
-    for agent in core.memory("carnivore"):
-        agent.show()
-
-    for agent in core.memory("carnivore"):
-        computePerception(agent)
-
-    for agent in core.memory("carnivore"):
-        computeDecision(agent)
-
-    for agent in core.memory("carnivore"):
-        applyDecision(agent)
-
-    #display vegetaux
-    for item in core.memory("vegetaux"):
+    # display vegetaux
+    for item in core.memory("items"):
         item.show()
 
 

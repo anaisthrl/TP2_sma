@@ -14,10 +14,10 @@ class Herbivore (Agent):
         acceleration = Vector2()
         rep = Vector2()
         for n in neighborhood:
-            rep = rep + self.posXY - n.position
+            rep = rep + self.body.position - n.posXY
         att = Vector2()
         if target is not None:
-            att = target.posXY - self.body.position
+            att = target.body.position - self.body.position
         acceleration = att + rep
         self.body.acceleration = Vector2(0, 0)
 
@@ -33,6 +33,7 @@ class Herbivore (Agent):
                 self.body.acceleration = force
                 if self.body.position.distance_to(cible.posXY) <= self.body.sizeBody+p.size:
                     p.color = (150, 150, 150)
+                    p.estMange = True
                     self.body.timerFaim = 0
 
         self.body.update()
@@ -42,7 +43,7 @@ class Herbivore (Agent):
         target = None
         neighborhood = []
         for p in perceptionList:
-            if isinstance(p, Vegetaux):
+            if isinstance(p, Herbivore):
                 target = p
             else:
                 neighborhood.append(p)
