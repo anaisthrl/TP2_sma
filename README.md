@@ -1,6 +1,6 @@
 # TP2_sma
  
-------------------------------------------------INFORMATIONS POUR LE RENDU----------------------------------------------------------
+-------------------------------INFORMATIONS POUR LE RENDU----------------------------------------------------------
 
 Rendu TP noté Anaïs THORAL 
 5A info apprentissage
@@ -24,7 +24,7 @@ rouge: superprédateur
 vert: végétaux
 
 
-------------------------------------------------RECHERCHES POUR ENVIRONNEMENTS COHERENT--------------------------------------------
+---------------------------------RECHERCHES POUR ENVIRONNEMENTS COHERENT--------------------------------------------
 
 1 an = 1110 frames (mon programme tourne à 30 frames/secondes)
 
