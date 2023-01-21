@@ -47,3 +47,6 @@ Vitesse de la souris: 6 km/h
 Reproduction souris : 10 portée / an de 5 à 10 souriceaux
 
 Espérance de vie : 2 ans
+
+
+Pour les autres agents, le programme tourne à 1 ou deux petits par années.
