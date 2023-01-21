@@ -40,17 +40,18 @@ class Carnivore(Agent):
                 fuite = self.fuite(predateursDansVision)
                 self.body.acceleration = self.body.acceleration - fuite
 
-        for p in proies:
-            if not p.estMort and len(predateursDansVision) == 0:  # mange les herbivores s'il n'est pas entrain de fuire
-                proiesDansVision.append(p)
-                cible = p
+        if len(predateursDansVision) == 0:  # mange les herbivores s'il n'est pas entrain de fuire
+            for p in proies:
+                if not p.estMort :
+                    proiesDansVision.append(p)
+                    cible = p
 
-                if cible is not None:
-                    force = cible.position - self.body.position
-                    self.body.acceleration = force
-                    if self.body.position.distance_to(cible.position) <= self.body.sizeBody + p.sizeBody:
-                        cible.estMort = True
-                        self.body.timerFaim = 0
+                    if cible is not None:
+                        force = cible.position - self.body.position
+                        self.body.acceleration = force
+                        if self.body.position.distance_to(cible.position) <= self.body.sizeBody + p.sizeBody:
+                            cible.estMort = True
+                            self.body.timerFaim = 0
 
         self.body.update()
 

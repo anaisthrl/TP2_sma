@@ -33,17 +33,17 @@ class Body:
 
     def edge(self):
         if self.position.x <= self.sizeBody:
-            self.velocity.x *= -1
-            self.acceleration *= -1
+            self.velocity.x *= -2
+            self.acceleration *= -2
         if self.position.x + self.sizeBody >= core.WINDOW_SIZE[0]-18:
-            self.velocity.x *= -1
-            self.acceleration *= -1
+            self.velocity.x *= -2
+            self.acceleration *= -2
         if self.position.y <= self.sizeBody:
-            self.velocity.y *= -1
-            self.acceleration *= -1
+            self.velocity.y *= -2
+            self.acceleration *= -2
         if self.position.y + self.sizeBody >= core.WINDOW_SIZE[1]-18:
-            self.velocity.y *= -1
-            self.acceleration *= -1
+            self.velocity.y *= -2
+            self.acceleration *= -2
 
     def move(self):
         if not self.dort:

@@ -39,8 +39,8 @@ class Herbivore(Agent):
                 fuite = self.fuite(predateursDansVision)
                 self.body.acceleration = self.body.acceleration - fuite
 
-        for p in proies:
-            if len(predateursDansVision) == 0:  # mange les végéteux s'il n'est pas entrain de fuire
+        if len(predateursDansVision) == 0:  # mange les végétaux s'il n'est pas entrain de fuire
+            for p in proies:
                 proiesDansVision.append(p)
                 cible = p
                 if cible is not None:
