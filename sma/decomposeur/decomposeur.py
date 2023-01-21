@@ -2,8 +2,11 @@ from pygame import Vector2
 
 import core
 from sma.agent import Agent
+from sma.carnivores.bodyCarnivore import BodyC
 from sma.carnivores.carnivore import Carnivore
+from sma.herbivores.bodyHerbivore import BodyH
 from sma.herbivores.herbivore import Herbivore
+from sma.superpredateur.bodySP import BodySP
 from sma.superpredateur.superpredateur import Superpredateur
 
 
@@ -19,8 +22,8 @@ class Decomposeur (Agent):
         for n in neighborhood:
             rep = rep + self.body.position - n.position
         att = Vector2()
-        if target is not None:
-            att = target.body.position - self.body.position
+        for t in target:
+            att = t.position - self.body.position
         acceleration = att + rep
         self.body.acceleration = Vector2(0, 0)
 
@@ -28,14 +31,14 @@ class Decomposeur (Agent):
         proiesDansVision = []
         cible = None
 
-        for p in neighborhood:
-            if p.estMort:
-                proiesDansVision.append(p)
-                cible = p
+        for t in target:
+            if t.estMort:
+                proiesDansVision.append(t)
+                cible = t
             if cible is not None:
                 force = cible.position - self.body.position
                 self.body.acceleration = force
-                if self.body.position.distance_to(cible.position) <= self.body.sizeBody+p.sizeBody:
+                if self.body.position.distance_to(cible.position) <= self.body.sizeBody+t.sizeBody:
                     cible.estMort = True
                     cible.estMange = True
                     self.body.timerFaim = 0
@@ -45,11 +48,11 @@ class Decomposeur (Agent):
 
 
     def filtrePerception(self, perceptionList):
-        target = None
+        target = []
         neighborhood = []
         for p in perceptionList:
-            if isinstance(p, Carnivore) or isinstance(p, Superpredateur) or isinstance(p, Herbivore):
-                target = p
+            if isinstance(p, BodyC) or isinstance(p, BodySP) or isinstance(p, BodyH):
+                target.append(p)
             else:
                 neighborhood.append(p)
         return target, neighborhood

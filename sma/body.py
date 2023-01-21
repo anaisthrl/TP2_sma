@@ -48,6 +48,7 @@ class Body:
     def move(self):
         if not self.dort:
             if not self.estMort : #quand l'agent dort il arrête de bouger
+                self.edge()
                 if self.acceleration.length() > self.maxAcc:
                     self.acceleration.scale_to_length(self.maxAcc)
 
@@ -57,7 +58,6 @@ class Body:
 
                 self.position += self.velocity
                 self.acceleration = Vector2(0, 0)
-                self.edge()
 
         if self.dort:
             self.timerDormir += 1

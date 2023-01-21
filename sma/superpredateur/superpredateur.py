@@ -3,6 +3,7 @@ import random
 from pygame import Vector2
 
 from sma.agent import Agent
+from sma.carnivores.bodyCarnivore import BodyC
 from sma.carnivores.carnivore import Carnivore
 from sma.herbivores.herbivore import Herbivore
 
@@ -13,14 +14,14 @@ class Superpredateur (Agent):
         Agent.__init__(self,body)
 
     def update(self):
-        target, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
+        proies, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
         acceleration = Vector2()
         rep = Vector2()
         for n in neighborhood:
             rep = rep + self.body.position - n.position
         att = Vector2()
-        if target is not None:
-            att = target.body.position - self.body.position
+        for p in proies:
+            att = p.position - self.body.position
         acceleration = att + rep
         self.body.acceleration = Vector2(0, 0)
 
@@ -28,7 +29,7 @@ class Superpredateur (Agent):
         proiesDansVision = []
         cible = None
 
-        for p in neighborhood:
+        for p in proies:
             if not p.estMort:
                 proiesDansVision.append(p)
                 cible = p
@@ -43,11 +44,11 @@ class Superpredateur (Agent):
 
 
     def filtrePerception(self, perceptionList):
-        target = None
+        proies = []
         neighborhood = []
         for p in perceptionList:
-            if isinstance(p, Carnivore):
-                target = p
+            if isinstance(p, BodyC):
+                proies.append(p)
             else:
                 neighborhood.append(p)
-        return target, neighborhood
+        return proies, neighborhood

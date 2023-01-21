@@ -49,7 +49,7 @@ def computePerception(a):
 
     if isinstance(a, Carnivore) and not a.body.estMort:
         for b in core.memory('agents'):
-            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Carnivore) and not isinstance(b,Superpredateur) and not isinstance(b,Decomposeur):
+            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Carnivore) :
                 a.body.fustrum.perceptionList.append(b.body)
 
     if isinstance(a, Herbivore) and not a.body.estMort:
@@ -58,6 +58,9 @@ def computePerception(a):
                 a.body.fustrum.perceptionList.append(b)
                 if b.estMange:
                     core.memory('items').remove(b)
+        for b in core.memory('agents'):
+            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Herbivore):
+                a.body.fustrum.perceptionList.append(b.body)
 
     if isinstance(a, Decomposeur):
         for b in core.memory('agents'):
