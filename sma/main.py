@@ -1,3 +1,5 @@
+import random
+
 from pygame import Vector2
 
 import core
@@ -34,7 +36,7 @@ def setup():
     for i in range(0, 1):
         core.memory('agents').append(Carnivore(BodyC()))
 
-    for i in range(0, 15):
+    for i in range(0, 1):
         core.memory('items').append(Vegetaux())
 
     print("Setup END-----------")
@@ -44,12 +46,13 @@ def computePerception(a):
     a.body.fustrum.perceptionList = []
     if isinstance(a, Superpredateur) and not a.body.estMort:
         for b in core.memory('agents'):
-            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Superpredateur) and not isinstance(b,Herbivore) and not isinstance(b,Decomposeur):
+            if a.body.fustrum.inside(b.body) and not b.body.estMort \
+                    and not isinstance(b, Superpredateur) and not isinstance(b, Herbivore) and not isinstance(b, Decomposeur):
                 a.body.fustrum.perceptionList.append(b.body)
 
     if isinstance(a, Carnivore) and not a.body.estMort:
         for b in core.memory('agents'):
-            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Carnivore) :
+            if a.body.fustrum.inside(b.body) and not b.body.estMort:
                 a.body.fustrum.perceptionList.append(b.body)
 
     if isinstance(a, Herbivore) and not a.body.estMort:
@@ -59,12 +62,12 @@ def computePerception(a):
                 if b.estMange:
                     core.memory('items').remove(b)
         for b in core.memory('agents'):
-            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b,Herbivore):
+            if a.body.fustrum.inside(b.body) and not b.body.estMort and not isinstance(b, Herbivore):
                 a.body.fustrum.perceptionList.append(b.body)
 
     if isinstance(a, Decomposeur):
         for b in core.memory('agents'):
-            if a.body.fustrum.inside(b.body) and b.body.estMort and not isinstance(b,Decomposeur):
+            if a.body.fustrum.inside(b.body) and b.body.estMort and not isinstance(b, Decomposeur):
                 a.body.fustrum.perceptionList.append(b.body)
                 if b.body.estMange:
                     core.memory('agents').remove(b)
@@ -72,7 +75,7 @@ def computePerception(a):
 
 def computeDecision(a):
     a.update()
-    #question 4: gestion de la mort des decomposeurs
+    # question 4: gestion de la mort des decomposeurs
     if a.body.estMort and isinstance(a, Decomposeur):
         newVege = Vegetaux()
         newVege.posXY = a.body.position
@@ -83,9 +86,11 @@ def computeDecision(a):
 
     # question 4 d: gestion de la reproduction
     if a.body.reproduction and isinstance(a, Superpredateur):
-        newBody = BodySP()
-        newBody.position = a.body.position + Vector2(50, 50)
-        core.memory('agents').append(Superpredateur(newBody))
+        nbPetit = random.randint(2, 4)
+        for i in nbPetit:
+            newBody = BodySP()
+            newBody.position = a.body.position + Vector2(50, 50)
+            core.memory('agents').append(Superpredateur(newBody))
         a.body.reproduction = False
         a.body.timerReproduction = 0
 

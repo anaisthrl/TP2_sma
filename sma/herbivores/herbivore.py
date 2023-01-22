@@ -14,17 +14,17 @@ class Herbivore(Agent):
 
     def update(self):
         proies, predateurs, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
-        acceleration = Vector2()
-        rep = Vector2()
-        for n in neighborhood:
-            rep = rep + self.body.position - n.posXY
-        att = Vector2()
-        for p in proies:
-            att = p.posXY - self.body.position
-        for p in predateurs:
-            att = p.position - self.body.position
-        acceleration = att + rep
-        self.body.acceleration = Vector2(0, 0)
+        # acceleration = Vector2()
+        # rep = Vector2()
+        # for n in neighborhood:
+        #     rep = rep + self.body.position - n.posXY
+        # att = Vector2()
+        # for p in proies:
+        #     att = p.posXY - self.body.position
+        # for p in predateurs:
+        #     att = p.position - self.body.position
+        # acceleration = att + rep
+        # self.body.acceleration = Vector2(0, 0)
 
         # gestion mangeur - question 6
         proiesDansVision = []
@@ -62,24 +62,3 @@ class Herbivore(Agent):
             if isinstance(p, BodyC):
                 predateurs.append(p)
         return proies, predateurs, neighborhood
-
-    def fuite(self, predateurs):
-        pilotage = Vector2()
-        nbPredateur = 0
-        for p in predateurs:
-            if self.body.position.distance_to(p.position) != self.body.sizeBody + p.sizeBody:
-                diff = p.position - self.body.position
-                pilotage += diff
-                nbPredateur += 1
-            else:
-                pilotage += Vector2(random.uniform(-5, 5), random.uniform(-5, 5))
-                nbPredateur += 1
-
-        if nbPredateur > 0:
-            pilotage /= nbPredateur
-            pilotage += self.body.velocity
-
-            if pilotage.length() > self.body.maxAcc:
-                pilotage = pilotage.normalize()
-                pilotage.scale_to_length(self.body.maxAcc)
-        return pilotage

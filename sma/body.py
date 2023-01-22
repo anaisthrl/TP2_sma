@@ -18,6 +18,7 @@ class Body:
         self.acceleration = Vector2(random.uniform(-3, 3), random.uniform(-3, 3))  # pour mouvement aléatoire
         self.maxAcc = 3
         self.maxSpeed = 4
+        self.sizeBody = 1
         self.dateNaissance = datetime.datetime.now()
 
         self.timerVie = 0
@@ -33,22 +34,22 @@ class Body:
 
     def edge(self):
         if self.position.x <= self.sizeBody:
-            self.velocity.x *= -2
-            self.acceleration *= -2
-        if self.position.x + self.sizeBody >= core.WINDOW_SIZE[0]-18:
-            self.velocity.x *= -2
-            self.acceleration *= -2
+            self.velocity.x *= -1
+            self.acceleration *= -1
         if self.position.y <= self.sizeBody:
-            self.velocity.y *= -2
-            self.acceleration *= -2
-        if self.position.y + self.sizeBody >= core.WINDOW_SIZE[1]-18:
-            self.velocity.y *= -2
-            self.acceleration *= -2
+            self.velocity.y *= -1
+            self.acceleration *= -1
+        if self.position.x + self.sizeBody >= core.WINDOW_SIZE[0] - self.sizeBody*2:
+            self.velocity.x *= -1
+            self.acceleration *= -1
+        if self.position.y + self.sizeBody >= core.WINDOW_SIZE[1] - self.sizeBody*2:
+            self.velocity.y *= -1
+            self.acceleration *= -1
 
     def move(self):
         if not self.dort:
             if not self.estMort : #quand l'agent dort il arrête de bouger
-                self.edge()
+                #self.edge()
                 if self.acceleration.length() > self.maxAcc:
                     self.acceleration.scale_to_length(self.maxAcc)
 
@@ -56,8 +57,13 @@ class Body:
                 if self.velocity.length() > self.maxSpeed:
                     self.velocity.scale_to_length(self.maxSpeed)
 
-                self.position += self.velocity
+                prochaine_position = self.position + self.velocity
+                prochaine_position.x %= core.WINDOW_SIZE[0]
+                prochaine_position.y %= core.WINDOW_SIZE[1]
+                self.position = prochaine_position
                 self.acceleration = Vector2(0, 0)
+
+
 
         if self.dort:
             self.timerDormir += 1

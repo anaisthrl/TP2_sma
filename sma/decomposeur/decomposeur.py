@@ -17,15 +17,15 @@ class Decomposeur (Agent):
 
     def update(self):
         target, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
-        acceleration = Vector2()
-        rep = Vector2()
-        for n in neighborhood:
-            rep = rep + self.body.position - n.position
-        att = Vector2()
-        for t in target:
-            att = t.position - self.body.position
-        acceleration = att + rep
-        self.body.acceleration = Vector2(0, 0)
+        # acceleration = Vector2()
+        # rep = Vector2()
+        # for n in neighborhood:
+        #     rep = rep + self.body.position - n.position
+        # att = Vector2()
+        # for t in target:
+        #     att = t.position - self.body.position
+        # acceleration = att + rep
+        # self.body.acceleration = Vector2(0, 0)
 
         #gestion mangeur - question 6
         proiesDansVision = []
