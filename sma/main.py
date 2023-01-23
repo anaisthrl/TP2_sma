@@ -1,4 +1,5 @@
 import random
+import sys
 import threading
 
 import pygame.time
@@ -218,9 +219,12 @@ def run(last_call=None):
 
         calcul_pourcentage()
         calcul_meilleur_individu()
-
-    print("Au final :")
-    calcul_pourcentage()
+    else: # fin du programme au bout de la durée limite d'exécution
+        print("Au final :")
+        calcul_pourcentage()
+        print("Fin du programme.")
+        pygame.quit()
+        sys.exit()
 
 def calcul_pourcentage():
     # compte des agents pour l'affichage de pourcentages
@@ -269,15 +273,16 @@ def graphique():
 
         agents_temp = {"superpredateurs": 0, "carnivores": 0, "herbivores": 0, "decomposeurs": 0}
 
-        for agent in core.memory("agents"):
-            if isinstance(agent, Superpredateur):
-                agents_temp["superpredateurs"] += 1
-            if isinstance(agent, Carnivore):
-                agents_temp["carnivores"] += 1
-            if isinstance(agent, Herbivore):
-                agents_temp["herbivores"] += 1
-            if isinstance(agent, Decomposeur):
-                agents_temp["decomposeurs"] += 1
+        for agent in core.memory("agents"):  # on ne compte pas les agents décédés
+            if not agent.body.estMort:
+                if isinstance(agent, Superpredateur):
+                    agents_temp["superpredateurs"] += 1
+                if isinstance(agent, Carnivore):
+                    agents_temp["carnivores"] += 1
+                if isinstance(agent, Herbivore):
+                    agents_temp["herbivores"] += 1
+                if isinstance(agent, Decomposeur):
+                    agents_temp["decomposeurs"] += 1
 
         plt.cla()
 
