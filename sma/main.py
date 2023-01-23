@@ -20,6 +20,13 @@ frame_count = 0
 duree_simulation = 0
 data_json = None
 
+# variable pour l'affichage des statistiques
+nb_superpredateurs = 0
+nb_carnivores = 0
+nb_herbivores = 0
+nb_decomposeurs = 0
+nb_cadavres = 0
+
 def setup():
     print("Setup START---------")
     core.fps = 30
@@ -56,6 +63,7 @@ def load(path):
         duree_simulation = data['dureeSimu']
 
     return data
+
 
 def creationBody(data, type):
     new_body = None
@@ -94,6 +102,7 @@ def creationBody(data, type):
         new_body.size = data[type]['parametres']['sizeBody']
 
     return new_body
+
 
 def computePerception(a):
     a.body.fustrum.perceptionList = []
@@ -177,6 +186,7 @@ def run():
     #gestion du temps de simulation
     global frame_count
     frame_count += 1
+
     if not (frame_count >= duree_simulation):
         core.cleanScreen()
         # Display superpredateur
@@ -196,5 +206,31 @@ def run():
         for item in core.memory("items"):
             item.show()
 
+        for agent in core.memory("agents"):
+            if isinstance(agent, Superpredateur):
+                global nb_superpredateurs
+                nb_superpredateurs += 1
+            if isinstance(agent, Carnivore):
+                global nb_carnivores
+                nb_carnivores += 1
+            if isinstance(agent, Herbivore):
+                global nb_herbivores
+                nb_herbivores += 1
+            if isinstance(agent, Decomposeur):
+                global nb_decomposeurs
+                nb_decomposeurs += 1
+
+        calcul_pourcentage()
+
+def calcul_pourcentage():
+    total = nb_superpredateurs + nb_carnivores + nb_herbivores + nb_decomposeurs
+    pourcentageSP = nb_superpredateurs * 100 / total
+    pourcentageC = nb_carnivores * 100 / total
+    pourcentageH = nb_herbivores * 100 / total
+    pourcentageD = nb_decomposeurs * 100 / total
+    print("Superprédateurs : " + str(pourcentageSP) + "%")
+    print("Carnivores: " + str(pourcentageC) + "%")
+    print("Herbivores : " + str(pourcentageH) + "%")
+    print("Decomposeurs: " + str(pourcentageD) + "%")
 
 core.main(setup, run)

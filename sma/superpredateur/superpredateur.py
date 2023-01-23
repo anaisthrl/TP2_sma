@@ -15,15 +15,6 @@ class Superpredateur (Agent):
 
     def update(self):
         proies, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
-        # acceleration = Vector2()
-        # rep = Vector2()
-        # for n in neighborhood:
-        #     rep = rep + self.body.position - n.position
-        # att = Vector2()
-        # for p in proies:
-        #     att = p.position - self.body.position
-        # acceleration = att + rep
-        # self.body.acceleration = Vector2(0, 0)
 
         #gestion mangeur - question 6
         proiesDansVision = []
