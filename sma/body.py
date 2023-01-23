@@ -10,8 +10,10 @@ from fustrum import Fustrum
 class Body:
     def __init__(self):
         self.fustrum = Fustrum(300, self)
+        self.id = random.randint(1,500)
         self.position = Vector2(0, 0)
         self.acceleration = Vector2(0, 0)  # pour mouvement aléatoire
+        self.velocity = Vector2(0, 0)
         self.max_speed = 0
         self.max_acc = 0
         self.sizeBody = 0
@@ -30,21 +32,6 @@ class Body:
         self.dort = False
         self.reproduction = False
         self.color = (0,0,0)
-
-
-    def edge(self):
-        if self.position.x <= self.sizeBody:
-            self.velocity.x *= -1
-            self.acceleration *= -1
-        if self.position.y <= self.sizeBody:
-            self.velocity.y *= -1
-            self.acceleration *= -1
-        if self.position.x + self.sizeBody >= core.WINDOW_SIZE[0] - self.sizeBody*2:
-            self.velocity.x *= -1
-            self.acceleration *= -1
-        if self.position.y + self.sizeBody >= core.WINDOW_SIZE[1] - self.sizeBody*2:
-            self.velocity.y *= -1
-            self.acceleration *= -1
 
     def move(self):
         if not self.dort:

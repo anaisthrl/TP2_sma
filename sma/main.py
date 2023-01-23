@@ -206,7 +206,16 @@ def run():
         for item in core.memory("items"):
             item.show()
 
-        for agent in core.memory("agents"):
+        calcul_pourcentage()
+        calcul_meilleur_individu()
+
+    print("Au final :")
+    calcul_pourcentage()
+
+def calcul_pourcentage():
+    # compte des agents pour l'affichage de pourcentages
+    for agent in core.memory("agents"):
+        if not agent.body.estMort:
             if isinstance(agent, Superpredateur):
                 global nb_superpredateurs
                 nb_superpredateurs += 1
@@ -220,17 +229,25 @@ def run():
                 global nb_decomposeurs
                 nb_decomposeurs += 1
 
-        calcul_pourcentage()
-
-def calcul_pourcentage():
     total = nb_superpredateurs + nb_carnivores + nb_herbivores + nb_decomposeurs
     pourcentageSP = nb_superpredateurs * 100 / total
     pourcentageC = nb_carnivores * 100 / total
     pourcentageH = nb_herbivores * 100 / total
     pourcentageD = nb_decomposeurs * 100 / total
-    print("Superprédateurs : " + str(pourcentageSP) + "%")
-    print("Carnivores: " + str(pourcentageC) + "%")
-    print("Herbivores : " + str(pourcentageH) + "%")
-    print("Decomposeurs: " + str(pourcentageD) + "%")
+    print("Superprédateurs : " + str(round(pourcentageSP,2)) + " %")
+    print("Carnivores: " + str(round(pourcentageC,2)) + " %")
+    print("Herbivores : " + str(round(pourcentageH,2)) + " %")
+    print("Decomposeurs: " + str(round(pourcentageD,2)) + " %")
+
+def calcul_meilleur_individu():
+    meilleur_agent = None
+    calcul_temp = 0
+    for agent in core.memory("agents"):
+        calcul = agent.body.acceleration.x + agent.body.velocity.x + agent.body.seuilFatigue + agent.body.seuilReproduction + agent.body.seuilFatigue
+        if calcul_temp < calcul:
+            calcul_temp = calcul
+            meilleur_agent = agent
+
+    print("L'agent avec la meilleur génétique est : " + str(type(meilleur_agent)) + " avec l'id : " + str(meilleur_agent.body.id) + " qui est né à : " + meilleur_agent.body.dateNaissance.strftime("%H:%M:%S"))
 
 core.main(setup, run)
