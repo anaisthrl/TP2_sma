@@ -1,6 +1,8 @@
 import random
+import threading
 
 import pygame.time
+from matplotlib import pyplot as plt
 from pygame import Vector2
 import core
 import json
@@ -20,14 +22,18 @@ frame_count = 0
 duree_simulation = 0
 data_json = None
 
-# variable pour l'affichage des statistiques
+# variables pour l'affichage des statistiques
 nb_superpredateurs = 0
 nb_carnivores = 0
 nb_herbivores = 0
 nb_decomposeurs = 0
-nb_cadavres = 0
+
+# variables pour le graphique
+temps = []
+agents = {"superpredateurs": [], "carnivores": [], "herbivores": [], "decomposeurs": []}
 
 def setup():
+    core.memory("last_call", pygame.time.get_ticks())
     print("Setup START---------")
     core.fps = 30
     core.WINDOW_SIZE = [1000, 600]
@@ -52,6 +58,10 @@ def setup():
 
     for i in range(0, data_json['Vegetaux']['nb']):
         core.memory('items').append(creationBody(data_json, "Vegetaux"))
+
+    # pour le threading et affichage graphique
+    thread = threading.Thread(target=graphique, args=())
+    thread.start()
 
     print("Setup END-----------")
 
@@ -182,7 +192,7 @@ def applyDecision(a):
     a.body.move()
 
 
-def run():
+def run(last_call=None):
     #gestion du temps de simulation
     global frame_count
     frame_count += 1
@@ -214,19 +224,20 @@ def run():
 
 def calcul_pourcentage():
     # compte des agents pour l'affichage de pourcentages
+    nb_superpredateurs = 0
+    nb_carnivores = 0
+    nb_herbivores = 0
+    nb_decomposeurs = 0
+
     for agent in core.memory("agents"):
         if not agent.body.estMort:
             if isinstance(agent, Superpredateur):
-                global nb_superpredateurs
                 nb_superpredateurs += 1
             if isinstance(agent, Carnivore):
-                global nb_carnivores
                 nb_carnivores += 1
             if isinstance(agent, Herbivore):
-                global nb_herbivores
                 nb_herbivores += 1
             if isinstance(agent, Decomposeur):
-                global nb_decomposeurs
                 nb_decomposeurs += 1
 
     total = nb_superpredateurs + nb_carnivores + nb_herbivores + nb_decomposeurs
@@ -249,5 +260,46 @@ def calcul_meilleur_individu():
             meilleur_agent = agent
 
     print("L'agent avec la meilleur génétique est : " + str(type(meilleur_agent)) + " avec l'id : " + str(meilleur_agent.body.id) + " qui est né à : " + meilleur_agent.body.dateNaissance.strftime("%H:%M:%S"))
+
+def graphique():
+    while True:
+        current_time = pygame.time.get_ticks() / 1000
+        global temps
+        temps.append(current_time)
+
+        agents_temp = {"superpredateurs": 0, "carnivores": 0, "herbivores": 0, "decomposeurs": 0}
+
+        for agent in core.memory("agents"):
+            if isinstance(agent, Superpredateur):
+                agents_temp["superpredateurs"] += 1
+            if isinstance(agent, Carnivore):
+                agents_temp["carnivores"] += 1
+            if isinstance(agent, Herbivore):
+                agents_temp["herbivores"] += 1
+            if isinstance(agent, Decomposeur):
+                agents_temp["decomposeurs"] += 1
+
+        plt.cla()
+
+        global agents
+        for key in agents.keys():
+            agents[key].append(agents_temp[key])
+            if key == "superpredateurs":
+                plt.plot(temps, agents[key], 'r', label=key)
+            if key == "carnivores":
+                plt.plot(temps, agents[key], 'orange', label=key)
+            if key == "herbivores":
+                plt.plot(temps, agents[key], 'yellow', label=key)
+            if key == "decomposeurs":
+                plt.plot(temps, agents[key], 'blue', label=key)
+
+        plt.xlabel("Temps (s)")
+        plt.ylabel("Nombre d'agents")
+        plt.legend(loc="upper center")
+        plt.title("Evolution des agents au cours du temps")
+        plt.ion()
+        plt.draw()
+        plt.show()
+        plt.pause(0.001)
 
 core.main(setup, run)
