@@ -4,6 +4,7 @@ from pygame import Vector2
 
 from sma.agent import Agent
 from sma.carnivores.bodyCarnivore import BodyC
+from sma.superpredateur.bodySP import BodySP
 from sma.vegetaux import Vegetaux
 
 
@@ -13,18 +14,7 @@ class Herbivore(Agent):
         Agent.__init__(self, body)
 
     def update(self):
-        proies, predateurs, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
-        # acceleration = Vector2()
-        # rep = Vector2()
-        # for n in neighborhood:
-        #     rep = rep + self.body.position - n.posXY
-        # att = Vector2()
-        # for p in proies:
-        #     att = p.posXY - self.body.position
-        # for p in predateurs:
-        #     att = p.position - self.body.position
-        # acceleration = att + rep
-        # self.body.acceleration = Vector2(0, 0)
+        proies, predateurs, allies, neighborhood = self.filtrePerception(self.body.fustrum.perceptionList)
 
         # gestion mangeur - question 6
         proiesDansVision = []
@@ -38,6 +28,8 @@ class Herbivore(Agent):
                 predateursDansVision.append(p)
                 fuite = self.fuite(predateursDansVision)
                 self.body.acceleration = self.body.acceleration - fuite
+                if len(allies) > 0:
+                    self.flock(allies)
 
         if len(predateursDansVision) == 0:  # mange les végétaux s'il n'est pas entrain de fuire
             for p in proies:
@@ -55,10 +47,13 @@ class Herbivore(Agent):
     def filtrePerception(self, perceptionList):
         proies = []
         predateurs = []
+        allies = []
         neighborhood = []
         for p in perceptionList:
             if isinstance(p, Vegetaux):
                 proies.append(p)
             if isinstance(p, BodyC):
                 predateurs.append(p)
-        return proies, predateurs, neighborhood
+            if isinstance(p, BodySP):
+                allies.append(p)
+        return proies, predateurs, allies, neighborhood

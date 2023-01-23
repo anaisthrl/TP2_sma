@@ -9,7 +9,7 @@ from fustrum import Fustrum
 
 class Body:
     def __init__(self):
-        self.fustrum = Fustrum(250,self)
+        self.fustrum = Fustrum(300,self)
         self.position = Vector2(random.randint(0, core.WINDOW_SIZE[0] - 20),
                                 random.randint(0, core.WINDOW_SIZE[1] - 20))
 
@@ -49,7 +49,6 @@ class Body:
     def move(self):
         if not self.dort:
             if not self.estMort : #quand l'agent dort il arrête de bouger
-                #self.edge()
                 if self.acceleration.length() > self.maxAcc:
                     self.acceleration.scale_to_length(self.maxAcc)
 

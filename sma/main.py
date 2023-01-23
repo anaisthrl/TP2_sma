@@ -24,16 +24,16 @@ def setup():
     core.memory('agents', [])  # classe mere agent
     core.memory('items', [])
 
-    for i in range(0, 1):
+    for i in range(0, 2):
         core.memory('agents').append(Superpredateur(BodySP()))
 
-    for i in range(0, 1):
+    for i in range(0, 4):
         core.memory('agents').append(Herbivore(BodyH()))
 
     for i in range(0, 1):
         core.memory('agents').append(Decomposeur(BodyD()))
 
-    for i in range(0, 1):
+    for i in range(0, 4):
         core.memory('agents').append(Carnivore(BodyC()))
 
     for i in range(0, 1):

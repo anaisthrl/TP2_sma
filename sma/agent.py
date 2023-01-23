@@ -9,7 +9,7 @@ class Agent:
         self.body = body
         self.uuid = random.randint(100000, 999999999)
         self.varCohesion = Vector2()
-        self.cohesionFactor = 1.3
+        self.cohesionFactor = 1.4
         self.alignementFactor = 0.2
         self.separationFactor = 1.3
         self.varSeparation = Vector2()
@@ -49,7 +49,8 @@ class Agent:
         al = self.align(agentPerçus) * self.alignementFactor
         self.varSeparation = self.separation(agentPerçus) * -self.separationFactor
 
-        return self.varCohesion, al, self.varSeparation
+        self.body.acceleration =  self.body.acceleration + self.varCohesion + al + self.varSeparation
+
     def separation(self,bodies):
         steering = Vector2()
         agentsCounter = 0
@@ -73,6 +74,7 @@ class Agent:
                 steering = steering.normalize()
                 steering.scale_to_length(self.body.maxAcc)
         return steering
+
     def cohesion(self, bodies):
         steering = Vector2()
         agentCounter = 0
@@ -91,6 +93,7 @@ class Agent:
                 steering.scale_to_length(self.body.maxAcc)
 
         return steering
+
     def align(self, bodies):
         steering = Vector2()
         agentCounter = 0
