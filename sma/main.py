@@ -18,6 +18,7 @@ from sma.vegetaux import Vegetaux
 # définition d'une variable globale qui va compter le nombre de frames passées jusqu'à la fin du jeu "duree simulation"
 frame_count = 0
 duree_simulation = 0
+data_json = None
 
 def setup():
     print("Setup START---------")
@@ -27,22 +28,23 @@ def setup():
     core.memory('agents', [])  # classe mere agent
     core.memory('items', [])
 
-    load("scenario.json")
+    global data_json
+    data_json = load("scenario.json")
 
-    for i in range(0, 2):
-        core.memory('agents').append(Superpredateur(BodySP()))
+    for i in range(0, data_json['SuperPredateur']['nb']):
+        core.memory('agents').append(Superpredateur(creationBody(data_json, "SuperPredateur")))
 
-    for i in range(0, 4):
-        core.memory('agents').append(Herbivore(BodyH()))
+    for i in range(0, data_json['Herbivore']['nb']):
+        core.memory('agents').append(Herbivore(creationBody(data_json, "Herbivore")))
 
-    for i in range(0, 1):
-        core.memory('agents').append(Decomposeur(BodyD()))
+    for i in range(0, data_json['Decomposeur']['nb']):
+        core.memory('agents').append(Decomposeur(creationBody(data_json, "Decomposeur")))
 
-    for i in range(0, 4):
-        core.memory('agents').append(Carnivore(BodyC()))
+    for i in range(0, data_json['Carnivore']['nb']):
+        core.memory('agents').append(Carnivore(creationBody(data_json, "Carnivore")))
 
-    for i in range(0, 1):
-        core.memory('items').append(Vegetaux())
+    for i in range(0, data_json['Vegetaux']['nb']):
+        core.memory('items').append(creationBody(data_json, "Vegetaux"))
 
     print("Setup END-----------")
 
@@ -52,10 +54,46 @@ def load(path):
         data = json.load(fichier)
         global duree_simulation
         duree_simulation = data['dureeSimu']
-        
 
+    return data
 
+def creationBody(data, type):
+    new_body = None
+    if type == "SuperPredateur":
+        new_body = BodySP()
+    if type == "Carnivore":
+        new_body = BodyC()
+    if type == "Herbivore":
+        new_body = BodyH()
+    if type == "Decomposeur":
+        new_body = BodyD()
+    if type == "Vegetaux" :
+        new_body = Vegetaux()
 
+    if type != "Vegetaux":
+        new_body.max_speed = data[type]['parametres']['maxSpeed']
+        new_body.max_acc = data[type]['parametres']['maxAcc']
+        new_body.sizeBody = data[type]['parametres']['sizeBody']
+        new_body.seuilFatigue = data[type]['parametres']['maxFatigue']
+        new_body.seuilFaim = data[type]['parametres']['maxFaim']
+        new_body.seuilReproduction = data[type]['parametres']['maxReproduction']
+
+        new_body.position = Vector2(random.randint(0, core.WINDOW_SIZE[0] - data[type]['parametres']['position'][0]),
+                                    random.randint(0, core.WINDOW_SIZE[1] - data[type]['parametres']['position'][1]))
+        new_body.velocity = Vector2(random.uniform(-data[type]['parametres']['vitesse'][0], data[type]['parametres']['vitesse'][0]), random.uniform(-data[type]['parametres']['vitesse'][1], data[type]['parametres']['vitesse'][1]))
+        new_body.acceleration = Vector2(random.uniform(-data[type]['parametres']['acceleration'][0], data[type]['parametres']['acceleration'][0]), random.uniform(-data[type]['parametres']['acceleration'][1], data[type]['parametres']['acceleration'][1]))
+
+        if type == "SuperPredateur" or type == "Carnivore":
+            new_body.esperanceVie = random.randint(data[type]['parametres']['maxTempsVie'][0], data[type]['parametres']['maxTempsVie'][1])
+        else:
+            new_body.esperanceVie = data[type]['parametres']['maxTempsVie']
+
+    else:
+        new_body.posXY = Vector2(random.randint(0, core.WINDOW_SIZE[0] - data[type]['parametres']['posXY'][0]),
+                         random.randint(0, core.WINDOW_SIZE[1] - data[type]['parametres']['posXY'][1]))
+        new_body.size = data[type]['parametres']['sizeBody']
+
+    return new_body
 
 def computePerception(a):
     a.body.fustrum.perceptionList = []
@@ -92,41 +130,41 @@ def computeDecision(a):
     a.update()
     # question 4: gestion de la mort des decomposeurs
     if a.body.estMort and isinstance(a, Decomposeur):
-        newVege = Vegetaux()
-        newVege.posXY = a.body.position
+        new_vege = creationBody(data_json,"Vegetaux")
+        new_vege.posXY = a.body.position
 
         core.memory('agents').remove(a)
 
-        core.memory('items').append(newVege)
+        core.memory('items').append(new_vege)
 
     # question 4 d: gestion de la reproduction
     if a.body.reproduction and isinstance(a, Superpredateur):
-        nbPetit = random.randint(2, 4)
-        for i in nbPetit:
-            newBody = BodySP()
-            newBody.position = a.body.position + Vector2(50, 50)
-            core.memory('agents').append(Superpredateur(newBody))
+        nb_petit = random.randint(2, 4)
+        for i in nb_petit:
+            new_body_sp = creationBody(data_json,"SuperPredateur")
+            new_body_sp.position = a.body.position + Vector2(50, 50)
+            core.memory('agents').append(Superpredateur(new_body_sp))
         a.body.reproduction = False
         a.body.timerReproduction = 0
 
     if a.body.reproduction and isinstance(a, Carnivore):
-        newBodyC = BodyC()
-        newBodyC.position = a.body.position + Vector2(50, 50)
-        core.memory('agents').append(Carnivore(newBodyC))
+        new_body_c = creationBody(data_json,"Carnivore")
+        new_body_c.position = a.body.position + Vector2(50, 50)
+        core.memory('agents').append(Carnivore(new_body_c))
         a.body.reproduction = False
         a.body.timerReproduction = 0
 
     if a.body.reproduction and isinstance(a, Herbivore):
-        newBodyH = BodyH()
-        newBodyH.position = a.body.position + Vector2(50, 50)
-        core.memory('agents').append(Herbivore(newBodyH))
+        new_body_h = creationBody(data_json,"Herbivore")
+        new_body_h.position = a.body.position + Vector2(50, 50)
+        core.memory('agents').append(Herbivore(new_body_h))
         a.body.reproduction = False
         a.body.timerReproduction = 0
 
     if a.body.reproduction and isinstance(a, Decomposeur):
-        newBodyD = BodyD()
-        newBodyD.position = a.body.position + Vector2(50, 50)
-        core.memory('agents').append(Decomposeur(newBodyD))
+        new_body_d = creationBody(data_json,"Decomposeur")
+        new_body_d.position = a.body.position + Vector2(50, 50)
+        core.memory('agents').append(Decomposeur(new_body_d))
         a.body.reproduction = False
         a.body.timerReproduction = 0
 

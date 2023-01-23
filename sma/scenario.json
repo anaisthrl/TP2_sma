@@ -1,57 +1,75 @@
 {
    "dureeSimu":22300,
    "SuperPredateur": {
-      "nb": 5,
+      "nb": 2,
       "parametres": {
          "maxSpeed": 4,
          "maxAcc": 3,
          "position": [
-            "x",
-            "y"
+            20,
+            20
+         ],
+         "vitesse": [
+            4,
+            4
          ],
          "acceleration": [
-            "min",
-            "max"
+            3,
+            3
          ],
          "sizeBody": 30,
-         "maxTempsVie": "max",
+         "maxTempsVie": [
+            5550,
+            22200
+         ],
          "maxFatigue": 390,
          "maxFaim": 292,
          "maxReproduction": 925
       }
    },
    "Carnivore": {
-      "nb": 10,
+      "nb": 5,
       "parametres": {
          "maxSpeed": 4,
          "maxAcc": 3,
          "position": [
-            "x",
-            "y"
+            20,
+            20
+         ],
+         "vitesse": [
+            3.5,
+            3.5
          ],
          "acceleration": [
-            "min",
-            "max"
+            3,
+            3
          ],
          "sizeBody": 20,
-         "maxTempsVie": "max",
+         "maxTempsVie": [
+            5000,
+            20000
+         ],
          "maxFatigue": 300,
          "maxFaim": 292,
          "maxReproduction": 925
       }
    },
    "Herbivore": {
-      "nb": 15,
+      "nb": 7,
       "parametres": {
          "maxSpeed": 4,
          "maxAcc": 3,
          "position": [
-            "x",
-            "y"
+            20,
+            20
+         ],
+         "vitesse": [
+            2.5,
+            2.5
          ],
          "acceleration": [
-            "min",
-            "max"
+            3,
+            3
          ],
          "sizeBody": 15,
          "maxTempsVie": 1110,
@@ -61,17 +79,21 @@
       }
    },
    "Decomposeur": {
-      "nb": 20,
+      "nb": 10,
       "parametres": {
          "maxSpeed": 4,
          "maxAcc": 3,
          "position": [
-            "x",
-            "y"
+            20,
+            20
+         ],
+         "vitesse": [
+            2,
+            2
          ],
          "acceleration": [
-            "min",
-            "max"
+            3,
+            3
          ],
          "sizeBody": 8,
          "maxTempsVie": 2220,
@@ -81,11 +103,11 @@
       }
    },
    "Vegetaux": {
-      "nb": 20,
+      "nb": 10,
       "parametres": {
          "posXY": [
-            "x",
-            "y"
+            10,
+            10
          ],
          "sizeBody": 5
       }

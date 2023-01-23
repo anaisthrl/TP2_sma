@@ -9,13 +9,16 @@ from fustrum import Fustrum
 
 class Body:
     def __init__(self):
-        self.fustrum = Fustrum(300,self)
-        self.position = Vector2(random.randint(0, core.WINDOW_SIZE[0] - 20),
-                                random.randint(0, core.WINDOW_SIZE[1] - 20))
-        self.acceleration = Vector2(random.uniform(-3, 3), random.uniform(-3, 3))  # pour mouvement aléatoire
-        self.max_acc = 3
-        self.max_speed = 4
-        self.sizeBody = 1
+        self.fustrum = Fustrum(300, self)
+        self.position = Vector2(0, 0)
+        self.acceleration = Vector2(0, 0)  # pour mouvement aléatoire
+        self.max_speed = 0
+        self.max_acc = 0
+        self.sizeBody = 0
+        self.seuilFaim = 0
+        self.seuilFatigue = 0
+        self.seuilReproduction = 0
+        self.esperanceVie = 0
         self.dateNaissance = datetime.datetime.now()
 
         self.timerVie = 0
