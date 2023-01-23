@@ -1,10 +1,10 @@
 import random
 
+import pygame.time
 from pygame import Vector2
-
 import core
-from agent import Agent
-from body import Body
+import json
+
 from sma.carnivores.bodyCarnivore import BodyC
 from sma.carnivores.carnivore import Carnivore
 from sma.decomposeur.bodyDecomposeur import BodyD
@@ -15,6 +15,9 @@ from sma.superpredateur.bodySP import BodySP
 from sma.superpredateur.superpredateur import Superpredateur
 from sma.vegetaux import Vegetaux
 
+# définition d'une variable globale qui va compter le nombre de frames passées jusqu'à la fin du jeu "duree simulation"
+frame_count = 0
+duree_simulation = 0
 
 def setup():
     print("Setup START---------")
@@ -23,6 +26,8 @@ def setup():
 
     core.memory('agents', [])  # classe mere agent
     core.memory('items', [])
+
+    load("scenario.json")
 
     for i in range(0, 2):
         core.memory('agents').append(Superpredateur(BodySP()))
@@ -40,6 +45,16 @@ def setup():
         core.memory('items').append(Vegetaux())
 
     print("Setup END-----------")
+
+
+def load(path):
+    with open(path) as fichier:
+        data = json.load(fichier)
+        global duree_simulation
+        duree_simulation = data['dureeSimu']
+        
+
+
 
 
 def computePerception(a):
@@ -121,24 +136,27 @@ def applyDecision(a):
 
 
 def run():
-    core.cleanScreen()
+    #gestion du temps de simulation
+    global frame_count
+    frame_count += 1
+    if not (frame_count >= duree_simulation):
+        core.cleanScreen()
+        # Display superpredateur
+        for agent in core.memory("agents"):
+            agent.show()
 
-    # Display superpredateur
-    for agent in core.memory("agents"):
-        agent.show()
+        for agent in core.memory("agents"):
+            computePerception(agent)
 
-    for agent in core.memory("agents"):
-        computePerception(agent)
+        for agent in core.memory("agents"):
+            computeDecision(agent)
 
-    for agent in core.memory("agents"):
-        computeDecision(agent)
+        for agent in core.memory("agents"):
+            applyDecision(agent)
 
-    for agent in core.memory("agents"):
-        applyDecision(agent)
-
-    # display vegetaux
-    for item in core.memory("items"):
-        item.show()
+        # display vegetaux
+        for item in core.memory("items"):
+            item.show()
 
 
 core.main(setup, run)

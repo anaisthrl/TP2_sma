@@ -34,9 +34,9 @@ class Agent:
             pilotage /= nbPredateur
             pilotage += self.body.velocity
 
-            if pilotage.length() > self.body.maxAcc:
+            if pilotage.length() > self.body.max_acc:
                 pilotage = pilotage.normalize()
-                pilotage.scale_to_length(self.body.maxAcc)
+                pilotage.scale_to_length(self.body.max_acc)
         return pilotage
 
     def flock(self, bodies):
@@ -70,9 +70,9 @@ class Agent:
 
             steering += self.body.velocity
 
-            if steering.length() > self.body.maxAcc:
+            if steering.length() > self.body.max_acc:
                 steering = steering.normalize()
-                steering.scale_to_length(self.body.maxAcc)
+                steering.scale_to_length(self.body.max_acc)
         return steering
 
     def cohesion(self, bodies):
@@ -88,9 +88,9 @@ class Agent:
             steering -= self.body.position
 
             steering += self.body.velocity
-            if steering.length() > self.body.maxAcc:
+            if steering.length() > self.body.max_acc:
                 steering = steering.normalize()
-                steering.scale_to_length(self.body.maxAcc)
+                steering.scale_to_length(self.body.max_acc)
 
         return steering
 
@@ -105,8 +105,8 @@ class Agent:
             steering /= agentCounter
 
             steering -= self.body.velocity
-            if steering.length() > self.body.maxAcc:
+            if steering.length() > self.body.max_acc:
                 steering = steering.normalize()
-                steering.scale_to_length(self.body.maxAcc)
+                steering.scale_to_length(self.body.max_acc)
 
         return steering

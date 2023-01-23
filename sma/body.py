@@ -12,12 +12,9 @@ class Body:
         self.fustrum = Fustrum(300,self)
         self.position = Vector2(random.randint(0, core.WINDOW_SIZE[0] - 20),
                                 random.randint(0, core.WINDOW_SIZE[1] - 20))
-
-        self.position = Vector2(random.randint(0, core.WINDOW_SIZE[0] - 20),
-                                random.randint(0, core.WINDOW_SIZE[1] - 20))
         self.acceleration = Vector2(random.uniform(-3, 3), random.uniform(-3, 3))  # pour mouvement aléatoire
-        self.maxAcc = 3
-        self.maxSpeed = 4
+        self.max_acc = 3
+        self.max_speed = 4
         self.sizeBody = 1
         self.dateNaissance = datetime.datetime.now()
 
@@ -49,12 +46,12 @@ class Body:
     def move(self):
         if not self.dort:
             if not self.estMort : #quand l'agent dort il arrête de bouger
-                if self.acceleration.length() > self.maxAcc:
-                    self.acceleration.scale_to_length(self.maxAcc)
+                if self.acceleration.length() > self.max_acc:
+                    self.acceleration.scale_to_length(self.max_acc)
 
                 self.velocity += self.acceleration
-                if self.velocity.length() > self.maxSpeed:
-                    self.velocity.scale_to_length(self.maxSpeed)
+                if self.velocity.length() > self.max_speed:
+                    self.velocity.scale_to_length(self.max_speed)
 
                 prochaine_position = self.position + self.velocity
                 prochaine_position.x %= core.WINDOW_SIZE[0]
