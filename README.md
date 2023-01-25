@@ -15,10 +15,10 @@ orange : carnivores
 bleu : décomposeurs
 
 
-jaune : herbivore
+jaune : herbivores
 
 
-rouge: superprédateur
+rouge: superprédateurs
 
 
 vert: végétaux
