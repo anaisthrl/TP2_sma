@@ -33,6 +33,7 @@ nb_decomposeurs = 0
 temps = []
 agents = {"superpredateurs": [], "carnivores": [], "herbivores": [], "decomposeurs": []}
 
+
 def setup():
     core.memory("last_call", pygame.time.get_ticks())
     print("Setup START---------")
@@ -40,7 +41,7 @@ def setup():
     core.WINDOW_SIZE = [1000, 600]
 
     core.memory('agents', [])  # classe mere agent
-    core.memory('items', [])
+    core.memory('items', [])  # va regrouper les végétaux
 
     global data_json
     data_json = load("scenario.json")
@@ -70,6 +71,7 @@ def setup():
 def load(path):
     with open(path) as fichier:
         data = json.load(fichier)
+
         global duree_simulation
         duree_simulation = data['dureeSimu']
 
@@ -200,7 +202,6 @@ def run(last_call=None):
 
     if not (frame_count >= duree_simulation):
         core.cleanScreen()
-        # Display superpredateur
         for agent in core.memory("agents"):
             agent.show()
 
@@ -225,6 +226,7 @@ def run(last_call=None):
         print("Fin du programme.")
         pygame.quit()
         sys.exit()
+
 
 def calcul_pourcentage():
     # compte des agents pour l'affichage de pourcentages
@@ -254,16 +256,18 @@ def calcul_pourcentage():
     print("Herbivores : " + str(round(pourcentageH,2)) + " %")
     print("Decomposeurs: " + str(round(pourcentageD,2)) + " %")
 
+
 def calcul_meilleur_individu():
     meilleur_agent = None
     calcul_temp = 0
     for agent in core.memory("agents"):
-        calcul = agent.body.acceleration.x + agent.body.velocity.x + agent.body.seuilFatigue + agent.body.seuilReproduction + agent.body.seuilFatigue
+        calcul = agent.body.acceleration.x + agent.body.velocity.x + agent.body.seuilFatigue + agent.body.seuilReproduction + agent.body.esperanceVie
         if calcul_temp < calcul:
             calcul_temp = calcul
             meilleur_agent = agent
 
     print("L'agent avec la meilleur génétique est : " + str(type(meilleur_agent)) + " avec l'id : " + str(meilleur_agent.body.id) + " qui est né à : " + meilleur_agent.body.dateNaissance.strftime("%H:%M:%S"))
+
 
 def graphique():
     while True:
@@ -306,5 +310,6 @@ def graphique():
         plt.draw()
         plt.show()
         plt.pause(0.001)
+
 
 core.main(setup, run)

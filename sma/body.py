@@ -12,7 +12,7 @@ class Body:
         self.fustrum = Fustrum(300, self)
         self.id = random.randint(1,500)
         self.position = Vector2(0, 0)
-        self.acceleration = Vector2(0, 0)  # pour mouvement aléatoire
+        self.acceleration = Vector2(0, 0)
         self.velocity = Vector2(0, 0)
         self.max_speed = 0
         self.max_acc = 0
@@ -23,6 +23,7 @@ class Body:
         self.esperanceVie = 0
         self.dateNaissance = datetime.datetime.now()
 
+        # attributs qui vont nous permettre de gérer correctement la simulation
         self.timerVie = 0
         self.timerFatigue = 0
         self.timerFaim = 0
