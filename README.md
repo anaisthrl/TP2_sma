@@ -151,7 +151,7 @@ Vous retrouverez une courbe en temps réel representation l'évolution de ma pop
 
 1 an = 1110 frames (mon programme tourne à 30 frames/secondes)
 
-* Super prédateurs 
+* SuperPrédateurs 
 
 
 Vitesse du Hibou : entre 10 et 20 miles de l'heure 
@@ -171,5 +171,4 @@ Reproduction souris : 10 portée / an de 5 à 10 souriceaux
 
 Espérance de vie : 2 ans
 
-
-Pour les autres agents, le programme tourne à 1 ou deux petits par années.
+Pour les autres agents, le programme tourne à 1 ou 2 petits par année.
