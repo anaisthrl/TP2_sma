@@ -147,7 +147,7 @@ thread.start()``
 Vous retrouverez une courbe en temps réel representation l'évolution de ma population d'agent au cours du temps. Les couleurs associées aux courbes sont les mêmes que celles de mes agents.
 
 
-## RECHERCHES POUR ENVIRONNEMENTS COHERENT
+## RECHERCHES POUR ENVIRONNEMENT COHERENT
 
 1 an = 1110 frames (mon programme tourne à 30 frames/secondes)
 
